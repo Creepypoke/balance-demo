@@ -1,5 +1,6 @@
 import { create, type Game, type ThrowResult } from "./index";
 import "./demo.css";
+import { styleDemoWidget } from "./demo-theme";
 
 let game: Game;
 let successes = 0;
@@ -20,6 +21,7 @@ const mount = (initial = 0) => {
       onFailure: onResult,
       onCount: (result) => console.info(`Пройден рубеж: ${result.count} бросков`),
     });
+    styleDemoWidget();
   } catch (error) {
     document.querySelector("#game")!.textContent =
       `Не удалось запустить WebGL: ${(error as Error).message}`;

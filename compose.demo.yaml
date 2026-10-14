@@ -1,0 +1,16 @@
+# Managed by Coolify. Load the image on home-server before deploying.
+services:
+  web:
+    image: triangle-demo:demo-20261014-01
+    pull_policy: never
+    environment:
+      NGINX_ENTRYPOINT_WORKER_PROCESSES_AUTOTUNE: "1"
+    ports:
+      - "192.168.1.135:8090:8080"
+    restart: unless-stopped
+    mem_limit: 64m
+    cpus: 0.25
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL

@@ -4,6 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#f5f5ef" />
+    <script>
+      (() => {
+        let preference = "system";
+        try {
+          const saved = localStorage.getItem("triangle-toss-demo-theme");
+          if (["light", "dark", "system"].includes(saved)) preference = saved;
+        } catch {
+          // The demo also works when browser storage is unavailable.
+        }
+        const dark =
+          preference === "dark" ||
+          (preference === "system" && matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.dataset.demoThemePreference = preference;
+        document.documentElement.dataset.demoTheme = dark ? "dark" : "light";
+        document.querySelector('meta[name="theme-color"]').content = dark ? "#151c18" : "#f5f5ef";
+      })();
+    </script>
     <link
       rel="icon"
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3L30 28H2Z' fill='%2379d6a4' stroke='%23294c38' stroke-width='2'/%3E%3C/svg%3E"
@@ -18,14 +35,40 @@
     <div class="page">
       <header class="navigation">
         <a class="brand" href="#">△ <span>баланс</span></a
-        ><span class="edition">ИНТЕРАКТИВНЫЙ ЭКСПЕРИМЕНТ / 01</span
-        ><a
-          class="source"
-          href="https://developer.mozilla.org/ru/docs/Web/API/WebGL_API"
-          target="_blank"
-          rel="noopener noreferrer"
-          >На WebGL ↗</a
-        >
+        ><span class="edition">ИНТЕРАКТИВНЫЙ ЭКСПЕРИМЕНТ / 01</span>
+        <div class="navigation-actions">
+          <div class="theme-switch" role="group" aria-label="Тема demo сайта">
+            <button type="button" data-theme="light" aria-label="Дневная" aria-pressed="false">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="4" />
+                <path
+                  d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"
+                />
+              </svg>
+              <span class="theme-tooltip" aria-hidden="true">Дневная</span>
+            </button>
+            <button type="button" data-theme="dark" aria-label="Ночная" aria-pressed="false">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M20.5 14A9 9 0 0 1 10 3.5 9 9 0 1 0 20.5 14Z" />
+              </svg>
+              <span class="theme-tooltip" aria-hidden="true">Ночная</span>
+            </button>
+            <button type="button" data-theme="system" aria-label="Системная" aria-pressed="false">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="3" y="4" width="18" height="13" rx="2" />
+                <path d="M12 17v4m-4 0h8" />
+              </svg>
+              <span class="theme-tooltip" aria-hidden="true">Системная</span>
+            </button>
+          </div>
+          <a
+            class="source"
+            href="https://developer.mozilla.org/ru/docs/Web/API/WebGL_API"
+            target="_blank"
+            rel="noopener noreferrer"
+            >На WebGL ↗</a
+          >
+        </div>
       </header>
       <main>
         <section class="intro">

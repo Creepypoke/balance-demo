@@ -3,13 +3,18 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
+  "packageManager": "pnpm@12.11.2",
+  "engines": {
+    "bun": ">=1.4.0",
+    "pnpm": ">=12.11.2"
+  },
   "scripts": {
     "dev": "vite --host 0.0.0.0",
-    "https:setup": "node scripts/https-setup.mjs",
-    "dev:https": "npm run https:setup && vite --mode https --host 0.0.0.0 --port 5174 --strictPort",
-    "build": "npm run check && vite build && node scripts/size.mjs",
+    "https:setup": "bun scripts/https-setup.mjs",
+    "dev:https": "pnpm run https:setup && vite --mode https --host 0.0.0.0 --port 5174 --strictPort",
+    "build": "pnpm run check && vite build && bun scripts/size.mjs",
     "build:demo": "vite build --mode demo",
-    "build:obfuscated": "npm run build && node scripts/obfuscate.mjs",
+    "build:obfuscated": "pnpm run build && bun scripts/obfuscate.mjs",
     "preview": "vite preview --host 0.0.0.0",
     "check": "tsc --noEmit && oxlint src tests scripts vite.config.ts",
     "test": "vitest run",

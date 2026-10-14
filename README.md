@@ -6,22 +6,22 @@
 
 ## Быстрый старт
 
-Нужен Node.js **22.12+** (рекомендуется Node 24) и npm.
+Нужны Bun **1.4+** и pnpm **12.11+**.
 
 ```sh
-npm ci
-npm run dev
+pnpm install --frozen-lockfile
+pnpm run dev
 ```
 
 Откройте адрес Vite из терминала, обычно `http://127.0.0.1:5173`. На демостранице есть настройка вероятности, выбор цвета и статистика.
 
 ```sh
-npm test                 # тесты геометрии, физики и вероятности
-npm run check            # TypeScript + Oxlint
-npm run format           # Oxfmt
-npm run build            # минифицированный встраиваемый виджет
-npm run build:demo       # отдельный статический сайт → demo-dist/
-npm run build:obfuscated # необязательная обфускация
+pnpm test                 # тесты геометрии, физики и вероятности
+pnpm run check            # TypeScript + Oxlint
+pnpm run format           # Oxfmt
+pnpm run build            # минифицированный встраиваемый виджет
+pnpm run build:demo       # отдельный статический сайт → demo-dist/
+pnpm run build:obfuscated # необязательная обфускация
 ```
 
 ### Артефакты
@@ -157,10 +157,10 @@ style: {
 ### Локальный HTTPS для iPhone
 
 ```sh
-npm run dev:https
+pnpm run dev:https
 ```
 
-Команда создаёт локальный CA и сертификат для текущих LAN-адресов Mac, запускает игру на **5174/HTTPS** и отдельный сервер загрузки публичного CA на **5175/HTTP**. Нужен `openssl` в PATH. Дополнительные npm-зависимости не требуются; обычный `npm run dev` остаётся HTTP. Адреса выводятся в терминале.
+Команда создаёт локальный CA и сертификат для текущих LAN-адресов Mac, запускает игру на **5174/HTTPS** и отдельный сервер загрузки публичного CA на **5175/HTTP**. Нужен `openssl` в PATH. Дополнительные зависимости не требуются; обычный `pnpm run dev` остаётся HTTP. Адреса выводятся в терминале.
 
 На iPhone, подключённом к той же Wi-Fi сети:
 

@@ -1,0 +1,5 @@
+# Only the prebuilt demo is needed. Never send sources, keys or dependencies.
+**
+!Dockerfile
+!demo-dist/
+!demo-dist/**

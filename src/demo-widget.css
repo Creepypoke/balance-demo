@@ -1,0 +1,41 @@
+:host {
+  color: var(--demo-widget-text);
+  color-scheme: inherit;
+}
+.game {
+  background: var(--demo-widget-background);
+  border-color: var(--demo-border);
+}
+.top,
+.hint,
+.note,
+.ground::after {
+  color: var(--demo-muted);
+}
+.scene {
+  background-image: radial-gradient(var(--demo-widget-dot) 1px, transparent 1px);
+}
+.ground {
+  border-color: var(--demo-widget-ground);
+}
+.label {
+  color: var(--demo-widget-text);
+}
+.throw {
+  background: var(--demo-widget-button);
+  color: var(--demo-widget-button-text);
+}
+.throw:hover {
+  background: var(--demo-widget-button-hover);
+}
+.motion {
+  background: var(--demo-widget-motion);
+  color: var(--demo-widget-text);
+}
+.motion[aria-pressed="true"] {
+  background: var(--demo-widget-motion-active);
+}
+button:focus-visible,
+.scene:focus-visible {
+  outline-color: var(--demo-accent);
+}
