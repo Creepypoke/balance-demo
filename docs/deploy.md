@@ -1,6 +1,31 @@
-# Деплой демосайта без Git-репозитория
+# Деплой демосайта из Git через Coolify
 
-Dockerfile упаковывает уже собранный `demo-dist/` в непривилегированный nginx
+Основной источник: `https://github.com/Creepypoke/balance-demo`, ветка `master`.
+Coolify собирает корневой `Dockerfile`: Node 24 + pnpm 12.11.2 выполняют
+`pnpm install --frozen-lockfile` и `pnpm run build:demo`, затем результат
+копируется в непривилегированный nginx. Предварительная локальная сборка и
+ручная доставка образа больше не нужны.
+
+- Coolify application: `balance-demo`, UUID `x1tksvflvdhsridiyqikpmyg`.
+- Environment: `production` в существующем проекте `triangle-demo`.
+- Build pack: Dockerfile, путь `/Dockerfile`, build context `/`.
+- Внутренний HTTP-порт: `8080`; публикация: `192.168.1.135:8090:8080`.
+- Домен Traefik не задаётся: существующий маршрут KeenDNS `balance`
+  направляет запросы прямо на LAN-порт; TLS завершается на KeenDNS.
+- URL: **https://balance.home-router.crazedns.ru/**, публичный доступ без пароля.
+- Лимиты работающего контейнера: 128 MiB RAM, 0,5 CPU; HTTP healthcheck `/`.
+- Для обновления: push в `master`, затем **Deploy** в Coolify.
+  Автодеплой по push не настроен: панель и webhook endpoint остаются приватными.
+- Backup миграции: `/data/coolify/backups/balance-git-20261014/` на `home-server`.
+  Старый образ `triangle-demo:demo-20261014-01` сохранён для отката.
+
+Откат: остановить только `balance-demo` средствами Coolify, восстановить
+старый Compose из `old-compose.yaml` в этом backup-каталоге как сервис Coolify
+на том же порту `8090`. Маршрут роутера менять не нужно.
+
+## Исторический деплой без Git (заменён)
+
+Прежний Dockerfile упаковывал уже собранный `demo-dist/` в непривилегированный nginx
 на порту `8080`. Node, Bun и pnpm в работающем контейнере не нужны.
 Образ не содержит исходники, зависимости и локальные сертификаты.
 
