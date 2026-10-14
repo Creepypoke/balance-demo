@@ -1,7 +1,17 @@
-# Build the static site first: pnpm install --frozen-lockfile && pnpm run build:demo
+FROM node:24-alpine AS build
+
+WORKDIR /app
+RUN npm install --global pnpm@12.11.2
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile
+COPY index.html vite.config.ts tsconfig.json ./
+COPY src/ ./src/
+RUN pnpm run build:demo
+
 FROM nginxinc/nginx-unprivileged:stable-alpine
 
-COPY --chown=101:101 demo-dist/ /usr/share/nginx/html/
+ENV NGINX_ENTRYPOINT_WORKER_PROCESSES_AUTOTUNE=1
+COPY --from=build --chown=101:101 /app/demo-dist/ /usr/share/nginx/html/
 
 EXPOSE 8080
 

@@ -1,5 +1,10 @@
-# Only the prebuilt demo is needed. Never send sources, keys or dependencies.
+# Allow only build inputs. Never send keys, dependencies or Git metadata.
 **
 !Dockerfile
-!demo-dist/
-!demo-dist/**
+!package.json
+!pnpm-lock.yaml
+!index.html
+!vite.config.ts
+!tsconfig.json
+!src/
+!src/**
