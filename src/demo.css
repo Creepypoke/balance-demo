@@ -53,12 +53,14 @@ a {
   text-decoration: none;
 }
 button,
-input {
+input,
+select {
   font: inherit;
 }
 button:focus-visible,
 a:focus-visible,
-input:focus-visible {
+input:focus-visible,
+select:focus-visible {
   outline: 3px solid var(--demo-accent);
   outline-offset: 5px;
 }
@@ -281,6 +283,67 @@ input[type="range"] {
 }
 .swatches button[aria-pressed="true"] {
   outline-color: var(--demo-accent);
+}
+.shader-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  gap: 12px;
+  margin-top: 22px;
+  font-size: 12px;
+  cursor: pointer;
+}
+.shader-toggle input {
+  position: absolute;
+  right: 0;
+  width: 40px;
+  height: 24px;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.switch-track {
+  width: 40px;
+  height: 24px;
+  flex-shrink: 0;
+  padding: 3px;
+  border-radius: 24px;
+  background: var(--demo-border);
+  pointer-events: none;
+}
+.switch-track::after {
+  content: "";
+  display: block;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--demo-widget-background);
+}
+.shader-toggle input:checked + .switch-track {
+  background: var(--demo-accent);
+}
+.shader-toggle input:checked + .switch-track::after {
+  transform: translateX(16px);
+}
+.shader-toggle input:focus-visible + .switch-track {
+  outline: 3px solid var(--demo-accent);
+  outline-offset: 5px;
+}
+.shader-select {
+  width: 100%;
+  margin-top: 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--demo-border);
+  border-radius: 10px;
+  background: var(--demo-widget-background);
+  color: var(--demo-text);
+  font-size: 12px;
+  cursor: pointer;
+}
+.shader-select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 .stats {
   display: flex;

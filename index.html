@@ -130,6 +130,16 @@
                 aria-pressed="false"
               ></button>
             </div>
+            <label class="shader-toggle" for="shader-enabled">
+              <span>Шейдер</span>
+              <input id="shader-enabled" type="checkbox" role="switch" checked />
+              <span class="switch-track" aria-hidden="true"></span>
+            </label>
+            <label class="sr-only" for="shader-type">Материал треугольника</label>
+            <select id="shader-type" class="shader-select">
+              <option value="liquid">Жидкий перламутр</option>
+              <option value="wood">Дерево</option>
+            </select>
             <div class="stats">
               <div><span>Успехи</span><strong id="successes">00</strong></div>
               <div><span>Всего бросков</span><strong id="throws">00</strong></div>

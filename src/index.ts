@@ -12,6 +12,9 @@ export function create(target: string | HTMLElement, options: GameOptions = {}):
     typeof target === "string" ? document.querySelector<HTMLElement>(target) : target;
   if (!container) throw new Error("Контейнер игры не найден.");
   let rate = validateRate(options.successRate ?? 0.3);
+  const idleShaderSpeed = options.style?.idleShaderSpeed ?? 0;
+  if (!Number.isFinite(idleShaderSpeed) || idleShaderSpeed < 0 || idleShaderSpeed > 1)
+    throw new RangeError("idleShaderSpeed должен быть числом от 0 до 1.");
   let count = options.counter?.initial ?? 0;
   if (!Number.isSafeInteger(count) || count < 0)
     throw new RangeError("counter.initial должен быть целым неотрицательным числом.");
@@ -91,6 +94,9 @@ export function create(target: string | HTMLElement, options: GameOptions = {}):
   let previousAcceleration: { x: number; y: number; z: number; time: number } | null = null;
   let pointer: { id: number; x: number; y: number; time: number } | null = null;
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  let shaderTime = 0;
+  const animateShader = () => idleShaderSpeed > 0 && !reducedMotion.matches;
+  const shaderClock = () => (idleShaderSpeed > 0 ? shaderTime : physics.elapsed);
 
   const report = (error: unknown) => {
     const e = error instanceof Error ? error : new Error(String(error));
@@ -136,7 +142,7 @@ export function create(target: string | HTMLElement, options: GameOptions = {}):
   };
   const draw = () => {
     if (contextLost || destroyed || !sized) return;
-    renderer.draw(physics, physics.elapsed);
+    renderer.draw(physics, shaderClock());
     const grabSize = physics.radius + 16;
     grabTarget.style.width = grabTarget.style.height = `${grabSize * 2}px`;
     grabTarget.style.transform = `translate(${physics.x - grabSize}px,${physics.y - grabSize}px)`;
@@ -186,12 +192,20 @@ export function create(target: string | HTMLElement, options: GameOptions = {}):
   };
   const tick = (now: number) => {
     frame = 0;
-    if (!canRun() || !physics.active) {
+    if (!canRun() || (!physics.active && !animateShader())) {
       last = 0;
       return;
     }
     const delta = last ? Math.min((now - last) / 1000, 0.05) : STEP;
     last = now;
+    if (idleShaderSpeed > 0 && !reducedMotion.matches)
+      shaderTime += delta * (physics.active ? 1 : idleShaderSpeed);
+    if (!physics.active) {
+      // Only redraw the canvas at rest; labels, physics and counters stay untouched.
+      renderer.draw(physics, shaderClock());
+      frame = requestAnimationFrame(tick);
+      return;
+    }
     accumulator += delta;
     let impact = 0;
     while (accumulator >= STEP && physics.active) {
@@ -204,14 +218,15 @@ export function create(target: string | HTMLElement, options: GameOptions = {}):
     }
     draw();
     if (!physics.active) finish();
-    if (physics.active && canRun() && !frame) frame = requestAnimationFrame(tick);
+    if ((physics.active || animateShader()) && canRun() && !frame)
+      frame = requestAnimationFrame(tick);
   };
   const wake = () => {
     button.disabled = physics.active || !canRun();
-    if (physics.active && canRun() && !frame) {
+    if ((physics.active || animateShader()) && canRun() && !frame) {
       last = 0;
       frame = requestAnimationFrame(tick);
-    } else if (!canRun()) stop();
+    } else if (!canRun() || (!physics.active && !animateShader())) stop();
   };
   const toss = (via: ThrowResult["source"], horizontal = 0, power = 1) => {
     if (!canRun() || physics.active || count >= Number.MAX_SAFE_INTEGER) return false;
@@ -365,6 +380,7 @@ export function create(target: string | HTMLElement, options: GameOptions = {}):
     { signal },
   );
   document.addEventListener("visibilitychange", wake, { signal });
+  reducedMotion.addEventListener("change", wake, { signal });
   canvas.addEventListener(
     "webglcontextlost",
     (event) => {

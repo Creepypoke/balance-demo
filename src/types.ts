@@ -16,6 +16,8 @@ export interface GameOptions {
     background?: string;
     /** WebGL 1 GLSL: precision, u_color, u_time, v_local; returns gl_FragColor. */
     fragmentShader?: string;
+    /** Opt-in continuous shader time; idle speed relative to a toss (0–1). */
+    idleShaderSpeed?: number;
   };
   motion?: { enabled?: boolean; vibration?: boolean };
   onSuccess?: (result: ThrowResult) => void;
