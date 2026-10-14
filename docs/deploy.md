@@ -7,7 +7,7 @@ Coolify собирает корневой `Dockerfile`: Node 24 + pnpm 12.11.2 �
 ручная доставка образа больше не нужны.
 
 - Coolify application: `balance-demo`, UUID `x1tksvflvdhsridiyqikpmyg`.
-- Environment: `production` в существующем проекте `triangle-demo`.
+- Environment: `production` в проекте `balance-demo` (бывший `triangle-demo`).
 - Build pack: Dockerfile, путь `/Dockerfile`, build context `/`.
 - Внутренний HTTP-порт: `8080`; публикация: `192.168.1.135:8090:8080`.
 - Домен Traefik не задаётся: существующий маршрут KeenDNS `balance`
@@ -24,6 +24,9 @@ Coolify собирает корневой `Dockerfile`: Node 24 + pnpm 12.11.2 �
 на том же порту `8090`. Маршрут роутера менять не нужно.
 
 ## Исторический деплой без Git (заменён)
+
+Старый Compose-ресурс удалён после проверки Git-приложения. Примеры ниже
+описывают прежнюю схему и не являются текущими инструкциями обновления.
 
 Прежний Dockerfile упаковывал уже собранный `demo-dist/` в непривилегированный nginx
 на порту `8080`. Node, Bun и pnpm в работающем контейнере не нужны.
