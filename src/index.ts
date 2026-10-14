@@ -1,4 +1,4 @@
-import { chooseOutcome, FLIGHT_TIME, Physics, STEP, validateRate, vertices } from "./physics";
+import { chooseOutcome, Physics, STEP, validateRate, vertices } from "./physics";
 import { Renderer } from "./renderer";
 import { styles } from "./styles";
 import type { Game, GameOptions, ThrowResult } from "./types";
@@ -220,8 +220,7 @@ export function create(target: string | HTMLElement, options: GameOptions = {}):
     accumulator = 0;
     setStatus("В поисках равновесия…", "У каждой стороны своя роль.");
     if (reducedMotion.matches) {
-      physics.elapsed = FLIGHT_TIME + 0.5;
-      physics.step(STEP);
+      physics.complete();
       draw();
       finish();
     } else wake();
