@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f5f5ef" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3L30 28H2Z' fill='%2379d6a4' stroke='%23294c38' stroke-width='2'/%3E%3C/svg%3E"
+    />
+    <meta
+      name="description"
+      content="Три стороны, один баланс. Интерактивный эксперимент с треугольником времени, стоимости и качества."
+    />
+    <title>Баланс — треугольник проекта</title>
+  </head>
+  <body>
+    <div class="page">
+      <header class="navigation">
+        <a class="brand" href="#">△ <span>баланс</span></a
+        ><span class="edition">ИНТЕРАКТИВНЫЙ ЭКСПЕРИМЕНТ / 01</span
+        ><a
+          class="source"
+          href="https://developer.mozilla.org/ru/docs/Web/API/WebGL_API"
+          target="_blank"
+          rel="noopener noreferrer"
+          >На WebGL ↗</a
+        >
+      </header>
+      <main>
+        <section class="intro">
+          <span class="eyebrow"><i></i> МАЛЕНЬКАЯ ИГРА О БОЛЬШИХ РЕШЕНИЯХ</span>
+          <h1>У всего есть стороны.<br />Найдите <em>равновесие.</em></h1>
+          <p>
+            Быстро, недорого, качественно. А что, если не выбирать?<br class="desktop" />
+            Подбросьте треугольник и попробуйте поставить его на вершину.
+          </p>
+        </section>
+        <div class="workspace">
+          <section class="play">
+            <div id="game"></div>
+            <div class="under-game">
+              <span>↗ Кнопка, жест или тряска устройства</span
+              ><span>Без загрузок и регистрации</span>
+            </div>
+          </section>
+          <aside class="panel">
+            <span class="eyebrow">ПАРАМЕТРЫ ЭКСПЕРИМЕНТА</span>
+            <h2>Шанс на баланс</h2>
+            <p>Физика — для движения.<br />Вероятность — под вашим контролем.</p>
+            <div class="rate-value">
+              <strong id="rate-value">30<span>%</span></strong
+              ><span>успешных бросков<br />в среднем</span>
+            </div>
+            <label class="sr-only" for="rate">Вероятность успеха</label
+            ><input id="rate" type="range" min="0" max="100" value="30" />
+            <div class="range-labels"><span>Никогда</span><span>Всегда</span></div>
+            <div class="divider"></div>
+            <span class="eyebrow">ЦВЕТ ТРЕУГОЛЬНИКА</span>
+            <div class="swatches" role="group" aria-label="Цвет треугольника">
+              <button
+                type="button"
+                data-color="#79d6a4"
+                style="--swatch: #79d6a4"
+                aria-label="Мятный"
+                aria-pressed="true"
+              ></button
+              ><button
+                type="button"
+                data-color="#b7a5e4"
+                style="--swatch: #b7a5e4"
+                aria-label="Лавандовый"
+                aria-pressed="false"
+              ></button
+              ><button
+                type="button"
+                data-color="#efb47c"
+                style="--swatch: #efb47c"
+                aria-label="Персиковый"
+                aria-pressed="false"
+              ></button
+              ><button
+                type="button"
+                data-color="#93bddc"
+                style="--swatch: #93bddc"
+                aria-label="Голубой"
+                aria-pressed="false"
+              ></button>
+            </div>
+            <div class="stats">
+              <div><span>Успехи</span><strong id="successes">00</strong></div>
+              <div><span>Всего бросков</span><strong id="throws">00</strong></div>
+            </div>
+            <p class="disclaimer">
+              Каждый бросок — независимая попытка. 30% не означают ровно три успеха из десяти.
+            </p>
+          </aside>
+        </div>
+        <section class="principles" aria-label="Правила">
+          <article>
+            <span>01 / ПОДБРОСЬТЕ</span>
+            <h3>Дайте импульс</h3>
+            <p>Нажмите кнопку или смахните треугольник вверх. На телефоне можно включить тряску.</p>
+          </article>
+          <article>
+            <span>02 / НАБЛЮДАЙТЕ</span>
+            <h3>Доверьтесь движению</h3>
+            <p>Треугольник вращается, отскакивает от границ и ищет своё положение.</p>
+          </article>
+          <article>
+            <span>03 / ПОЙМАЙТЕ БАЛАНС</span>
+            <h3>Останьтесь на вершине</h3>
+            <p>Время, стоимость и качество в равновесии. Иногда нужна ещё одна попытка.</p>
+          </article>
+        </section>
+      </main>
+      <footer>
+        <span>△ Баланс — это процесс, а не случайность.</span
+        ><span>Лёгкий встраиваемый виджет · WebGL</span>
+      </footer>
+    </div>
+    <script type="module" src="/src/demo.ts"></script>
+  </body>
+</html>
