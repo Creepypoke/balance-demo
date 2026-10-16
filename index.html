@@ -82,6 +82,10 @@
         <div class="workspace">
           <section class="play">
             <div id="game"></div>
+            <template id="completion-actions">
+              <button id="open-feedback" class="throw" type="button">Оставить отзыв</button>
+              <button id="play-again" class="motion" type="button">Играть заново</button>
+            </template>
             <div class="under-game">
               <span>↗ Кнопка, жест или тряска устройства</span
               ><span>Без загрузок и регистрации</span>
@@ -172,6 +176,62 @@
         ><span>Лёгкий встраиваемый виджет · WebGL</span>
       </footer>
     </div>
+    <dialog
+      id="success-dialog"
+      class="success-dialog"
+      aria-labelledby="success-title"
+      aria-describedby="success-description"
+    >
+      <button
+        id="close-feedback"
+        class="dialog-close"
+        type="button"
+        aria-label="Закрыть окно"
+        autofocus
+      >
+        ×
+      </button>
+      <span class="eyebrow">ТРИ СТОРОНЫ. ОДНА ПОБЕДА.</span>
+      <h2 id="success-title">Вы нашли равновесие ✦</h2>
+      <p id="success-description">
+        Игра завершена. Давайте останемся на связи: подпишитесь на нашу рассылку или поделитесь
+        впечатлениями.
+      </p>
+      <form id="feedback-form" method="dialog" aria-describedby="feedback-demo-note">
+        <label for="feedback-email"
+          >Электронная почта <span class="field-optional">для рассылки</span></label
+        >
+        <input
+          id="feedback-email"
+          name="email"
+          type="email"
+          autocomplete="email"
+          placeholder="you@example.com"
+          maxlength="254"
+        />
+        <label class="newsletter-consent" for="feedback-newsletter">
+          <input id="feedback-newsletter" name="newsletter" type="checkbox" />
+          <span
+            >Хочу получать вашу рассылку. Даю согласие на её получение по указанному адресу.</span
+          >
+        </label>
+        <label for="feedback-message"
+          >Ваши впечатления <span class="field-optional">необязательно</span></label
+        >
+        <textarea
+          id="feedback-message"
+          name="feedback"
+          rows="4"
+          maxlength="2000"
+          placeholder="Что понравилось? Что можно сделать лучше?"
+        ></textarea>
+        <p id="feedback-demo-note" class="form-note">
+          Это демоформа. Данные никуда не отправляются и не сохраняются, подписка не оформляется.
+        </p>
+        <button class="demo-button" type="submit">Отправить · демо</button>
+        <p id="feedback-status" class="form-status" role="status" aria-live="polite"></p>
+      </form>
+    </dialog>
     <script type="module" src="/src/demo.ts"></script>
   </body>
 </html>

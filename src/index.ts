@@ -2,6 +2,7 @@ import { chooseOutcome, Physics, STEP, validateRate, vertices } from "./physics"
 import { Renderer } from "./renderer";
 import { styles } from "./styles";
 import type { Game, GameOptions, ThrowResult } from "./types";
+import { Confetti } from "./confetti";
 export type { Game, GameOptions, ThrowResult } from "./types";
 
 type MotionConstructor = typeof DeviceMotionEvent & { requestPermission?: () => Promise<string> };
@@ -63,6 +64,7 @@ export function create(target: string | HTMLElement, options: GameOptions = {}):
       options.style?.color ?? "#79d6a4",
       options.style?.strokeColor ?? "#294c38",
       options.style?.fragmentShader,
+      options.confetti === true,
     );
   let renderer: Renderer;
   try {
@@ -77,6 +79,7 @@ export function create(target: string | HTMLElement, options: GameOptions = {}):
   }
   container.append(host);
   const physics = new Physics();
+  const confetti = options.confetti ? new Confetti() : undefined;
   const abort = new AbortController();
   const signal = abort.signal;
   let destroyed = false,
@@ -96,6 +99,7 @@ export function create(target: string | HTMLElement, options: GameOptions = {}):
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   let shaderTime = 0;
   const animateShader = () => idleShaderSpeed > 0 && !reducedMotion.matches;
+  const animating = () => physics.active || animateShader() || confetti?.active;
   const shaderClock = () => (idleShaderSpeed > 0 ? shaderTime : physics.elapsed);
 
   const report = (error: unknown) => {
@@ -142,7 +146,7 @@ export function create(target: string | HTMLElement, options: GameOptions = {}):
   };
   const draw = () => {
     if (contextLost || destroyed || !sized) return;
-    renderer.draw(physics, shaderClock());
+    renderer.draw(physics, shaderClock(), confetti);
     const grabSize = physics.radius + 16;
     grabTarget.style.width = grabTarget.style.height = `${grabSize * 2}px`;
     grabTarget.style.transform = `translate(${physics.x - grabSize}px,${physics.y - grabSize}px)`;
@@ -181,6 +185,7 @@ export function create(target: string | HTMLElement, options: GameOptions = {}):
         : "В этот раз треугольник выбрал грань.",
     );
     if (physics.success) vibrate([35, 60, 65]);
+    if (physics.success && !reducedMotion.matches) confetti?.burst(physics);
     // Stable snapshot; host callbacks may destroy or start another throw.
     callback(physics.success ? options.onSuccess : options.onFailure, { ...result });
     if (milestones.has(result.count)) callback(options.onCount, { ...result });
@@ -192,7 +197,7 @@ export function create(target: string | HTMLElement, options: GameOptions = {}):
   };
   const tick = (now: number) => {
     frame = 0;
-    if (!canRun() || (!physics.active && !animateShader())) {
+    if (!canRun() || !animating()) {
       last = 0;
       return;
     }
@@ -200,7 +205,7 @@ export function create(target: string | HTMLElement, options: GameOptions = {}):
     last = now;
     if (idleShaderSpeed > 0 && !reducedMotion.matches)
       shaderTime += delta * (physics.active ? 1 : idleShaderSpeed);
-    if (!physics.active) {
+    if (!physics.active && !confetti?.active) {
       // Only redraw the canvas at rest; labels, physics and counters stay untouched.
       renderer.draw(physics, shaderClock());
       frame = requestAnimationFrame(tick);
@@ -208,8 +213,10 @@ export function create(target: string | HTMLElement, options: GameOptions = {}):
     }
     accumulator += delta;
     let impact = 0;
-    while (accumulator >= STEP && physics.active) {
+    const wasActive = physics.active;
+    while (accumulator >= STEP) {
       impact = Math.max(impact, physics.step(STEP));
+      confetti?.step(STEP, physics);
       accumulator -= STEP;
     }
     if (impact > 75 && now - lastVibration > 110) {
@@ -217,21 +224,25 @@ export function create(target: string | HTMLElement, options: GameOptions = {}):
       lastVibration = now;
     }
     draw();
-    if (!physics.active) finish();
-    if ((physics.active || animateShader()) && canRun() && !frame)
-      frame = requestAnimationFrame(tick);
+    if (wasActive && !physics.active) finish();
+    if (animating() && canRun() && !frame) frame = requestAnimationFrame(tick);
   };
   const wake = () => {
     button.disabled = physics.active || !canRun();
-    if ((physics.active || animateShader()) && canRun() && !frame) {
+    if (reducedMotion.matches && confetti?.active) {
+      confetti.clear();
+      draw();
+    }
+    if (animating() && canRun() && !frame) {
       last = 0;
       frame = requestAnimationFrame(tick);
-    } else if (!canRun() || (!physics.active && !animateShader())) stop();
+    } else if (!canRun() || !animating()) stop();
   };
   const toss = (via: ThrowResult["source"], horizontal = 0, power = 1) => {
     if (!canRun() || physics.active || count >= Number.MAX_SAFE_INTEGER) return false;
     source = via;
     physics.launch(chooseOutcome(rate), horizontal, power);
+    confetti?.release(physics);
     accumulator = 0;
     setStatus("В поисках равновесия…", "У каждой стороны своя роль.");
     if (reducedMotion.matches) {
@@ -457,6 +468,7 @@ export function create(target: string | HTMLElement, options: GameOptions = {}):
       resize.disconnect();
       intersection.disconnect();
       renderer.destroy();
+      confetti?.clear();
       host.remove();
     },
   };

@@ -57,12 +57,154 @@ input,
 select {
   font: inherit;
 }
+textarea {
+  font: inherit;
+}
 button:focus-visible,
 a:focus-visible,
 input:focus-visible,
 select:focus-visible {
   outline: 3px solid var(--demo-accent);
   outline-offset: 5px;
+}
+textarea:focus-visible {
+  outline: 3px solid var(--demo-accent);
+  outline-offset: 5px;
+}
+body:has(.success-dialog[open]) {
+  overflow: hidden;
+}
+.success-dialog {
+  width: min(500px, calc(100% - 32px));
+  max-height: calc(100dvh - 32px);
+  padding: clamp(24px, 5vw, 36px);
+  border: 1px solid var(--demo-border);
+  border-radius: 24px;
+  background: var(--demo-background);
+  color: var(--demo-text);
+  box-shadow: 0 24px 100px #0004;
+}
+.success-dialog::backdrop {
+  background: #101b15a8;
+}
+.success-dialog[open] {
+  animation: dialog-fade-in 240ms ease-out;
+}
+.success-dialog[open]::backdrop {
+  animation: dialog-fade-in 240ms ease-out;
+}
+@keyframes dialog-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.success-dialog > .eyebrow {
+  display: block;
+  padding-right: 24px;
+}
+.success-dialog h2 {
+  margin-top: 18px;
+  font-size: clamp(24px, 5vw, 30px);
+  letter-spacing: -0.7px;
+}
+.success-dialog > p,
+.form-note,
+.form-status {
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--demo-muted);
+}
+.dialog-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--demo-panel);
+  color: var(--demo-text);
+  font-size: 24px;
+  cursor: pointer;
+}
+.success-dialog form {
+  display: grid;
+  gap: 12px;
+  margin-top: 24px;
+}
+.success-dialog label {
+  font-size: 13px;
+}
+.field-optional {
+  margin-left: 6px;
+  color: var(--demo-muted);
+  font-size: 11px;
+}
+.success-dialog input[type="email"],
+.success-dialog textarea {
+  width: 100%;
+  min-width: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--demo-border);
+  border-radius: 12px;
+  background: var(--demo-widget-background);
+  color: var(--demo-text);
+  font-size: 16px;
+}
+.success-dialog textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+.success-dialog input::placeholder,
+.success-dialog textarea::placeholder {
+  color: var(--demo-muted);
+  opacity: 1;
+}
+.newsletter-consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 2px 0 12px;
+  line-height: 1.6;
+  cursor: pointer;
+}
+.newsletter-consent input {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin: 2px 0 0;
+  accent-color: var(--demo-accent);
+}
+.form-note {
+  margin: 0;
+  font-size: 11px;
+}
+.form-status {
+  margin: 0;
+  color: var(--demo-text);
+}
+.form-status:empty {
+  display: none;
+}
+.demo-button {
+  border: 1px solid transparent;
+  border-radius: 12px;
+  padding: 12px 18px;
+  background: var(--demo-widget-button);
+  color: var(--demo-widget-button-text);
+  cursor: pointer;
+  font-size: 13px;
+}
+.demo-button:hover {
+  background: var(--demo-widget-button-hover);
+}
+.panel button:disabled,
+.panel input:disabled {
+  cursor: default;
+  opacity: 0.5;
 }
 .page {
   max-width: 1180px;
@@ -504,6 +646,10 @@ footer {
   }
 }
 @media (prefers-reduced-motion: reduce) {
+  .success-dialog[open],
+  .success-dialog[open]::backdrop {
+    animation: none;
+  }
   .theme-tooltip {
     transition-property: visibility;
   }

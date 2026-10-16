@@ -8,6 +8,8 @@ export interface ThrowResult {
 export interface GameOptions {
   /** Independent probability for each throw, not a quota. Default 0.3. */
   successRate?: number;
+  /** WebGL paper burst on success. Default false; respects reduced motion. */
+  confetti?: boolean;
   counter?: { initial?: number; visible?: boolean; milestones?: number[] };
   labels?: readonly [string, string, string];
   style?: {

@@ -21,6 +21,29 @@
 .label {
   color: var(--demo-widget-text);
 }
+.bottom {
+  container-type: inline-size;
+}
+.actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: 420px;
+  margin-inline: auto;
+}
+.actions button {
+  min-width: 0;
+  height: 48px;
+  padding: 10px 12px;
+  line-height: 1.4;
+}
+@container (max-width: 340px) {
+  .status {
+    min-height: 84px;
+  }
+  .actions button {
+    height: 64px;
+  }
+}
 .throw {
   background: var(--demo-widget-button);
   color: var(--demo-widget-button-text);
