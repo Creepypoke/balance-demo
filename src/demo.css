@@ -392,29 +392,6 @@ input[type="range"] {
   font-size: 10px;
   color: var(--demo-muted);
 }
-.principles {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 48px;
-  margin: 50px 0 45px;
-}
-.principles article > span {
-  font-size: 9px;
-  letter-spacing: 0.13em;
-  color: var(--demo-muted);
-}
-.principles h3 {
-  font-size: 16px;
-  font-weight: 550;
-  margin: 12px 0 9px;
-  letter-spacing: -0.3px;
-}
-.principles p {
-  font-size: 12px;
-  line-height: 1.7;
-  color: var(--demo-muted);
-  margin: 0;
-}
 footer {
   border-top: 1px solid var(--demo-border);
   padding: 23px 0 30px;
@@ -453,9 +430,6 @@ footer {
   .panel {
     padding: 22px;
   }
-  .principles {
-    gap: 24px;
-  }
   .under-game span:last-child {
     display: none;
   }
@@ -489,14 +463,6 @@ footer {
   }
   .panel {
     padding: 24px;
-  }
-  .principles {
-    grid-template-columns: 1fr;
-    gap: 26px;
-    margin: 36px 0;
-  }
-  .principles p {
-    max-width: 340px;
   }
   .under-game {
     justify-content: center;
