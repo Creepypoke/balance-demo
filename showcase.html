@@ -175,7 +175,7 @@
             Никаких фреймворков и сборщиков — два файла и один обязательный вызов, без перезагрузки страницы.
             Виджет изолирован через Shadow DOM и не конфликтует со стилями вашего сайта.
           </p>
-          <pre class="embed-code"><code>&lt;div id="triangle-game" style="max-width:640px"&gt;&lt;/div&gt;
+          <pre class="embed-code"><code id="embed-code">&lt;div id="triangle-game" style="max-width:640px"&gt;&lt;/div&gt;
 &lt;script defer src="/assets/triangle-toss.min.js"&gt;&lt;/script&gt;
 &lt;script defer src="/assets/init-triangle.js"&gt;&lt;/script&gt;
 
@@ -183,9 +183,22 @@
 const game = TriangleToss.create("#triangle-game", {
   successRate: 0.3,
   labels: ["Время", "Стоимость", "Качество"],
+  style: {
+    color: "#79d6a4",
+    fragmentShader: liquidShader, // GLSL — инлайн в init-файле
+    idleShaderSpeed: 0.16,
+  },
 });</code></pre>
+          <button type="button" class="embed-copy" id="embed-copy">
+            <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="9" y="9" width="12" height="12" rx="2" />
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+            </svg>
+            <span>Скопировать</span>
+          </button>
           <p class="embed-note">
-            Два <code>defer</code>-скрипта сохраняют порядок и не блокируют парсинг. Вероятность успеха
+            Два <code>defer</code>-скрипта сохраняют порядок и не блокируют парсинг. Код обновляется вместе
+            с параметрами выше — меняйте шанс, цвет и шейдер, чтобы увидеть результат. Вероятность успеха
             (<code>successRate</code>), цвета и подписи сторон задаются параметрами — меняются в init-файле,
             который вы контролируете сами.
           </p>
