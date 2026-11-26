@@ -1,5 +1,32 @@
 # Деплой демосайта из Git через Coolify
 
+## CI: сборка образа в GitHub Actions
+
+Каждый push в `master` запускает `.github/workflows/docker-publish.yml`:
+тесты (`pnpm run check` + `pnpm test`), сборка образа и публикация в
+**GitHub Container Registry**, репозиторий-ассоциация `creepypoke/balance-demo`:
+
+`ghcr.io/creepypoke/balance-demo:{latest, <sha-коммита>}`
+
+Теги: `latest` на каждый push в `master` и `<short-sha>` на каждый билд.
+Токен для push/pull — `GITHUB_TOKEN` (только чтение кода + `packages:write`).
+Реестр приватный: pull с сервера требует авторизации (GitHub PAT с
+`read:packages` или установленный `read:packages` токен).
+
+### Переключение Coolify на pull из GHCR
+
+Текущий деплой (ниже) строит образ прямо на сервере из Git. После настройки CI
+рекомендуемый путь:
+
+1. Создать секрет `GH_PACKAGES_TOKEN` для pull приватного образа (или переключить
+   пакет на публичный).
+2. В Coolify приложение `balance-demo` переключить на источник образа
+   (`raw image` вместо `Git build`), образ `ghcr.io/creepypoke/balance-demo:latest`.
+3. После push в `master` обновить тег образа (например, `:<short-sha>`) и сделать
+   redeploy.
+
+Пока CI не настроен в Coolify, поведение прежнее — Coolify собирает из Git.
+
 Основной источник: `https://github.com/Creepypoke/balance-demo`, ветка `master`.
 Coolify собирает корневой `Dockerfile`: Node 24 + pnpm 12.11.2 выполняют
 `pnpm install --frozen-lockfile` и `pnpm run build:demo`, затем результат
