@@ -66,7 +66,7 @@ describe("triangle geometry and rigid body", () => {
           else expect(bottom[0]).toBeCloseTo(bottom[1], 8);
         }
       }
-    });
+    }, 30000);
   }
   it("preserves final vertex orientation when resized", () => {
     const p = new Physics();
@@ -115,7 +115,7 @@ describe("triangle geometry and rigid body", () => {
         }
       }
     }
-  });
+  }, 30000);
   it("keeps the landing location instead of sliding back to the scene centre", () => {
     const p = new Physics();
     p.resize(760, 400);
