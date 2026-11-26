@@ -4,7 +4,7 @@ WORKDIR /app
 RUN npm install --global pnpm@12.11.2
 COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
-COPY index.html vite.config.ts tsconfig.json ./
+COPY index.html showcase.html vite.config.ts tsconfig.json ./
 COPY src/ ./src/
 RUN pnpm run build:demo
 

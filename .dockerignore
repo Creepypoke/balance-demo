@@ -4,6 +4,7 @@
 !package.json
 !pnpm-lock.yaml
 !index.html
+!showcase.html
 !vite.config.ts
 !tsconfig.json
 !src/
