@@ -1,5 +1,6 @@
 import { create, type ThrowResult } from "./index";
 import "./showcase.css";
+import { styleDemoWidget } from "./demo-theme";
 import { demoFragmentShader } from "./demo-shader";
 import { demoWoodFragmentShader } from "./demo-wood-shader";
 
@@ -54,6 +55,7 @@ create("#widget", {
   },
   onSuccess,
 });
+styleDemoWidget("#widget > div");
 
 document.querySelectorAll<HTMLButtonElement>("[data-open-widget]").forEach((button) => {
   button.addEventListener("click", () => modal?.showModal());

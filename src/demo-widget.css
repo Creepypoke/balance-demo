@@ -1,25 +1,25 @@
 :host {
-  color: var(--demo-widget-text);
+  color: var(--demo-widget-text, var(--text, #24342e));
   color-scheme: inherit;
 }
 .game {
-  background: var(--demo-widget-background);
-  border-color: var(--demo-border);
+  background: var(--demo-widget-background, #f6f8f3);
+  border-color: var(--demo-border, var(--border, #dce4d8));
 }
 .top,
 .hint,
 .note,
 .ground::after {
-  color: var(--demo-muted);
+  color: var(--demo-muted, var(--muted, #6d7d70));
 }
 .scene {
-  background-image: radial-gradient(var(--demo-widget-dot) 1px, transparent 1px);
+  background-image: radial-gradient(var(--demo-widget-dot, #d5ded0) 1px, transparent 1px);
 }
 .ground {
-  border-color: var(--demo-widget-ground);
+  border-color: var(--demo-widget-ground, #b6c4b1);
 }
 .label {
-  color: var(--demo-widget-text);
+  color: var(--demo-widget-text, var(--text, #24342e));
 }
 .bottom {
   container-type: inline-size;
@@ -45,20 +45,20 @@
   }
 }
 .throw {
-  background: var(--demo-widget-button);
-  color: var(--demo-widget-button-text);
+  background: var(--demo-widget-button, #243e30);
+  color: var(--demo-widget-button-text, #fff);
 }
 .throw:hover {
-  background: var(--demo-widget-button-hover);
+  background: var(--demo-widget-button-hover, #365741);
 }
 .motion {
-  background: var(--demo-widget-motion);
-  color: var(--demo-widget-text);
+  background: var(--demo-widget-motion, #e7edde);
+  color: var(--demo-widget-text, var(--text, #24342e));
 }
 .motion[aria-pressed="true"] {
-  background: var(--demo-widget-motion-active);
+  background: var(--demo-widget-motion-active, #d2e9cf);
 }
 button:focus-visible,
 .scene:focus-visible {
-  outline-color: var(--demo-accent);
+  outline-color: var(--demo-accent, var(--accent, #567c66));
 }

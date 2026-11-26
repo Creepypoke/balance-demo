@@ -34,8 +34,8 @@ systemTheme.addEventListener("change", applyTheme);
 applyTheme();
 
 /** Demo-only overrides: the distributed widget and its styles stay unchanged. */
-export const styleDemoWidget = () => {
-  const shadowRoot = document.querySelector("#game > div")?.shadowRoot;
+export const styleDemoWidget = (selector = "#game > div") => {
+  const shadowRoot = document.querySelector(selector)?.shadowRoot;
   if (!shadowRoot) return;
   const style = document.createElement("style");
   style.textContent = widgetTheme;
