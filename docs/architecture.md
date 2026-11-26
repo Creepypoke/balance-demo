@@ -11,7 +11,7 @@ HTML-хост
        ├─ styles.ts      изолированная оболочка виджета
        └─ types.ts       публичные TypeScript-контракты
 
-demo.ts + demo.css + index.html → только демонстрационный сайт
+demo.ts + demo.css + showcase.html → только демонстрационный сайт
 vite.config.ts                 → IIFE/ESM либо отдельная демосборка
 scripts/size.mjs                → размер raw/gzip/Brotli
 scripts/obfuscate.mjs           → опциональная финальная обработка IIFE

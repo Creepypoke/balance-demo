@@ -4,117 +4,198 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#f5f5ef" />
+    <script>
+      (() => {
+        let preference = "system";
+        try {
+          const saved = localStorage.getItem("triangle-toss-demo-theme");
+          if (["light", "dark", "system"].includes(saved)) preference = saved;
+        } catch {
+          // The demo also works when browser storage is unavailable.
+        }
+        const dark =
+          preference === "dark" ||
+          (preference === "system" && matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.dataset.demoThemePreference = preference;
+        document.documentElement.dataset.demoTheme = dark ? "dark" : "light";
+        document.querySelector('meta[name="theme-color"]').content = dark ? "#151c18" : "#f5f5ef";
+      })();
+    </script>
     <link
       rel="icon"
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3L30 28H2Z' fill='%2379d6a4' stroke='%23294c38' stroke-width='2'/%3E%3C/svg%3E"
     />
     <meta
       name="description"
-      content="Демо виджета «Треугольник равновесия»: как он выглядел бы на сайте вашей компании. Демонстрационная страница, данные не собраны."
+      content="Три стороны, один баланс. Интерактивный эксперимент с треугольником времени, стоимости и качества."
     />
-    <title>Демо виджета — демонстрационный сайт</title>
+    <title>Баланс — треугольник проекта</title>
   </head>
   <body>
     <div class="page">
       <header class="navigation">
-        <span class="brand">△ <span data-brand>Пример-бизнес</span></span>
-        <span class="demo-badge">Демо · выдуманная страница</span>
-        <button class="nav-cta button-reset" type="button" data-open-widget>Открыть виджет</button>
+        <a class="brand" href="#">△ <span>баланс</span></a
+        ><span class="edition">ИНТЕРАКТИВНЫЙ ЭКСПЕРИМЕНТ / 01</span>
+        <div class="navigation-actions">
+          <div class="theme-switch" role="group" aria-label="Тема demo сайта">
+            <button type="button" data-theme="light" aria-label="Дневная" aria-pressed="false">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="4" />
+                <path
+                  d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"
+                />
+              </svg>
+              <span class="theme-tooltip" aria-hidden="true">Дневная</span>
+            </button>
+            <button type="button" data-theme="dark" aria-label="Ночная" aria-pressed="false">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M20.5 14A9 9 0 0 1 10 3.5 9 9 0 1 0 20.5 14Z" />
+              </svg>
+              <span class="theme-tooltip" aria-hidden="true">Ночная</span>
+            </button>
+            <button type="button" data-theme="system" aria-label="Системная" aria-pressed="false">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="3" y="4" width="18" height="13" rx="2" />
+                <path d="M12 17v4m-4 0h8" />
+              </svg>
+              <span class="theme-tooltip" aria-hidden="true">Системная</span>
+            </button>
+          </div>
+          <a class="source" href="#embed">Как встроить</a>
+          <a
+            class="source"
+            href="https://developer.mozilla.org/ru/docs/Web/API/WebGL_API"
+            target="_blank"
+            rel="noopener noreferrer"
+            >На WebGL ↗</a
+          >
+        </div>
       </header>
-
       <main>
-        <section class="hero">
-          <span class="eyebrow"><i></i> ПРИМЕР ВСТРАИВАНИЯ · ДЕМО-СТРАНИЦА</span>
-          <h1>Ваш сайт с <em>интерактивным балансом</em></h1>
-          <p class="hero-sub">
-            Это демонстрационная страница. Она показывает, как выглядел бы встраиваемый
-            виджет «Треугольник равновесия» на сайте компании «<span data-brand>Пример-бизнес</span>»
-            в настоящем проекте: живой, без перезагрузки, с вашей вероятностью успеха.
+        <section class="intro">
+          <span class="eyebrow"><i></i> МАЛЕНЬКАЯ ИГРА О БОЛЬШИХ РЕШЕНИЯХ</span>
+          <h1>У всего есть стороны.<br />Найдите <em>равновесие.</em></h1>
+          <p>
+            Быстро, недорого, качественно. А что, если не выбирать?<br class="desktop" />
+            Подбросьте треугольник и попробуйте поставить его на вершину.
           </p>
-          <div class="hero-actions">
-            <button class="button-primary" type="button" data-open-widget>Открыть виджет</button>
-            <a class="button-secondary" href="#snippet">Код вставки</a>
-          </div>
         </section>
-
-        <section class="company" aria-label="Компания">
-          <h2><span data-brand>Пример-бизнес</span> – это мы!</h2>
-          <div class="company-grid">
-            <article>
-              <span class="company-num">01</span>
-              <h3>Быстрые решения</h3>
-              <p>Здесь поместится раздел о вашей компании и её подходах.</p>
-            </article>
-            <article>
-              <span class="company-num">02</span>
-              <h3>Измеримые результаты</h3>
-              <p>Или лента показателей — виджет не мешает основному контенту.</p>
-            </article>
-            <article>
-              <span class="company-num">03</span>
-              <h3>Живой опыт</h3>
-              <p>Виджет работает прямо на странице: откройте его и подбросьте треугольник.</p>
-            </article>
-          </div>
-        </section>
-
-        <section class="widget-section" aria-labelledby="widget-title">
-          <div class="section-head">
-            <span class="eyebrow"><i></i> ЖИВОЙ ПРИМЕР</span>
-            <h2 id="widget-title">Виджет на странице</h2>
-            <p>
-              Тот же код, что вы встроите у себя. Вероятность и цвета можно задать параметрами
-              при инициализации. Нажмите кнопку — виджет откроется в модальном окне.
+        <div class="workspace">
+          <section class="play">
+            <div id="game"></div>
+            <div class="under-game">
+              <span>↗ Кнопка, жест или тряска устройства</span
+              ><span>Без загрузок и регистрации</span>
+            </div>
+          </section>
+          <aside class="panel">
+            <span class="eyebrow">ПАРАМЕТРЫ ЭКСПЕРИМЕНТА</span>
+            <h2>Шанс на баланс</h2>
+            <p>Физика — для движения.<br />Вероятность — под вашим контролем.</p>
+            <div class="rate-value">
+              <strong id="rate-value">30<span>%</span></strong
+              ><span>успешных бросков<br />в среднем</span>
+            </div>
+            <label class="sr-only" for="rate">Вероятность успеха</label
+            ><input id="rate" type="range" min="0" max="100" value="30" />
+            <div class="range-labels"><span>Никогда</span><span>Всегда</span></div>
+            <div class="divider"></div>
+            <span class="eyebrow">ЦВЕТ ТРЕУГОЛЬНИКА</span>
+            <div class="swatches" role="group" aria-label="Цвет треугольника">
+              <button
+                type="button"
+                data-color="#79d6a4"
+                style="--swatch: #79d6a4"
+                aria-label="Мятный"
+                aria-pressed="true"
+              ></button
+              ><button
+                type="button"
+                data-color="#b7a5e4"
+                style="--swatch: #b7a5e4"
+                aria-label="Лавандовый"
+                aria-pressed="false"
+              ></button
+              ><button
+                type="button"
+                data-color="#efb47c"
+                style="--swatch: #efb47c"
+                aria-label="Персиковый"
+                aria-pressed="false"
+              ></button
+              ><button
+                type="button"
+                data-color="#93bddc"
+                style="--swatch: #93bddc"
+                aria-label="Голубой"
+                aria-pressed="false"
+              ></button>
+            </div>
+            <label class="shader-toggle" for="shader-enabled">
+              <span>Шейдер</span>
+              <input id="shader-enabled" type="checkbox" role="switch" checked />
+              <span class="switch-track" aria-hidden="true"></span>
+            </label>
+            <label class="sr-only" for="shader-type">Материал треугольника</label>
+            <select id="shader-type" class="shader-select">
+              <option value="liquid">Жидкий перламутр</option>
+              <option value="wood">Дерево</option>
+            </select>
+            <div class="stats">
+              <div><span>Успехи</span><strong id="successes">00</strong></div>
+              <div><span>Всего бросков</span><strong id="throws">00</strong></div>
+            </div>
+            <p class="disclaimer">
+              Каждый бросок — независимая попытка. 30% не означают ровно три успеха из десяти.
             </p>
-            <button class="button-primary" type="button" data-open-widget>Открыть виджет</button>
-          </div>
+          </aside>
+        </div>
+        <section class="principles" aria-label="Правила">
+          <article>
+            <span>01 / ПОДБРОСЬТЕ</span>
+            <h3>Дайте импульс</h3>
+            <p>Нажмите кнопку или смахните треугольник вверх. На телефоне можно включить тряску.</p>
+          </article>
+          <article>
+            <span>02 / НАБЛЮДАЙТЕ</span>
+            <h3>Доверьтесь движению</h3>
+            <p>Треугольник вращается, отскакивает от границ и ищет своё положение.</p>
+          </article>
+          <article>
+            <span>03 / ПОЙМАЙТЕ БАЛАНС</span>
+            <h3>Останьтесь на вершине</h3>
+            <p>Время, стоимость и качество в равновесии. Иногда нужна ещё одна попытка.</p>
+          </article>
         </section>
 
-        <section id="snippet" class="snippet" aria-labelledby="snippet-title">
-          <div class="section-head">
-            <span class="eyebrow"><i></i> КАК ВСТРОИТЬ</span>
-            <h2 id="snippet-title">Два скрипта и контейнер</h2>
-          </div>
-          <pre><code>&lt;div id="triangle-game" style="max-width:640px"&gt;&lt;/div&gt;
-&lt;script defer src="/assets/triangle-toss.min.js"&gt;&lt;/script&gt;
-&lt;script defer src="/assets/init-triangle.js"&gt;&lt;/script&gt;</code></pre>
-          <pre><code>const game = TriangleToss.create("#triangle-game", {
-  successRate: 0.35,
-  confetti: true,
-  counter: { initial: 0, visible: true, milestones: [5, 10, 25] },
-  style: { color: "#79d6a4", strokeColor: "#294c38", background: "#f6f8f3" },
-});</code></pre>
-          <p class="snippet-note">
-            Параметры: <code>successRate</code>, <code>labels</code> (три подписи),
-            <code>style</code> (цвет, обводка, фон), <code>counter</code>, <code>confetti</code>.
-            Виджет не делает сетевых запросов и не загружает шрифтов.
+        <section id="embed" class="embed" aria-labelledby="embed-title">
+          <span class="eyebrow"><i></i> КАК ВСТРОИТЬ</span>
+          <h2 class="embed-title" id="embed-title">Встраивание на ваш сайт</h2>
+          <p class="embed-sub">
+            Никаких фреймворков и сборщиков — два файла и один обязательный вызов, без перезагрузки страницы.
+            Виджет изолирован через Shadow DOM и не конфликтует со стилями вашего сайта.
           </p>
-        </section>
+          <pre class="embed-code"><code>&lt;div id="triangle-game" style="max-width:640px"&gt;&lt;/div&gt;
+&lt;script defer src="/assets/triangle-toss.min.js"&gt;&lt;/script&gt;
+&lt;script defer src="/assets/init-triangle.js"&gt;&lt;/script&gt;
 
-        <section class="faq" aria-label="О проекте">
-          <h2>Зачем это показывать клиентам</h2>
-          <ul>
-            <li>Покажи виджет вживую — не слайдом, а настоящим интерактивным примером.</li>
-            <li>Настрой вероятность и цвета под себя — и скажи: «вот так он работает на вашей странице».</li>
-            <li>Вся информация на этой странице вымышленная и служит только демонстрации.</li>
-          </ul>
+// init-triangle.js
+const game = TriangleToss.create("#triangle-game", {
+  successRate: 0.3,
+  labels: ["Время", "Стоимость", "Качество"],
+});</code></pre>
+          <p class="embed-note">
+            Два <code>defer</code>-скрипта сохраняют порядок и не блокируют парсинг. Вероятность успеха
+            (<code>successRate</code>), цвета и подписи сторон задаются параметрами — меняются в init-файле,
+            который вы контролируете сами.
+          </p>
         </section>
       </main>
-
       <footer>
-        <span>△ <span data-brand>Пример-бизнес</span> · демо · данные не собираются</span>
-        <span>Три стороны. Один баланс.</span>
+        <span>△ Баланс — это процесс, а не случайность.</span
+        ><span>Лёгкий встраиваемый виджет · WebGL</span>
       </footer>
     </div>
-    <dialog id="widget-modal" class="widget-modal" aria-labelledby="widget-modal-title">
-      <button id="close-widget-modal" class="widget-modal-close" type="button" aria-label="Закрыть окно">×</button>
-      <span class="eyebrow"><i></i> ЖИВОЙ ПРИМЕР</span>
-      <h2 id="widget-modal-title">Виджет на странице</h2>
-      <div id="widget"></div>
-      <p class="widget-caption">
-        Виджет работает изолированно от остальной страницы и наоборот.
-      </p>
-    </dialog>
-    <script type="module" src="/src/showcase.ts"></script>
+    <script type="module" src="/src/demo.ts"></script>
   </body>
 </html>
