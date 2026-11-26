@@ -50,6 +50,12 @@ export default defineConfig(({ mode }) => ({
     mode === "demo"
       ? {
           outDir: "demo-dist",
+          rollupOptions: {
+            input: {
+              main: "index.html",
+              showcase: "showcase.html",
+            },
+          },
         }
       : {
           outDir: "dist",

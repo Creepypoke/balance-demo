@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f5f5ef" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3L30 28H2Z' fill='%2379d6a4' stroke='%23294c38' stroke-width='2'/%3E%3C/svg%3E"
+    />
+    <meta
+      name="description"
+      content="Демо виджета «Треугольник равновесия»: как он выглядел бы на сайте вашей компании. Демонстрационная страница, данные не собраны."
+    />
+    <title>Демо виджета — демонстрационный сайт</title>
+  </head>
+  <body>
+    <div class="page">
+      <header class="navigation">
+        <span class="brand">△ <span data-brand>Пример-бизнес</span></span>
+        <span class="demo-badge">Демо · выдуманная страница</span>
+        <button class="nav-cta button-reset" type="button" data-open-widget>Открыть виджет</button>
+      </header>
+
+      <main>
+        <section class="hero">
+          <span class="eyebrow"><i></i> ПРИМЕР ВСТРАИВАНИЯ · ДЕМО-СТРАНИЦА</span>
+          <h1>Ваш сайт с <em>интерактивным балансом</em></h1>
+          <p class="hero-sub">
+            Это демонстрационная страница. Она показывает, как выглядел бы встраиваемый
+            виджет «Треугольник равновесия» на сайте компании «<span data-brand>Пример-бизнес</span>»
+            в настоящем проекте: живой, без перезагрузки, с вашей вероятностью успеха.
+          </p>
+          <div class="hero-actions">
+            <button class="button-primary" type="button" data-open-widget>Открыть виджет</button>
+            <a class="button-secondary" href="#snippet">Код вставки</a>
+          </div>
+        </section>
+
+        <section class="company" aria-label="Компания">
+          <h2><span data-brand>Пример-бизнес</span> – это мы!</h2>
+          <div class="company-grid">
+            <article>
+              <span class="company-num">01</span>
+              <h3>Быстрые решения</h3>
+              <p>Здесь поместится раздел о вашей компании и её подходах.</p>
+            </article>
+            <article>
+              <span class="company-num">02</span>
+              <h3>Измеримые результаты</h3>
+              <p>Или лента показателей — виджет не мешает основному контенту.</p>
+            </article>
+            <article>
+              <span class="company-num">03</span>
+              <h3>Живой опыт</h3>
+              <p>Виджет работает прямо на странице: откройте его и подбросьте треугольник.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="widget-section" aria-labelledby="widget-title">
+          <div class="section-head">
+            <span class="eyebrow"><i></i> ЖИВОЙ ПРИМЕР</span>
+            <h2 id="widget-title">Виджет на странице</h2>
+            <p>
+              Тот же код, что вы встроите у себя. Вероятность и цвета можно задать параметрами
+              при инициализации. Нажмите кнопку — виджет откроется в модальном окне.
+            </p>
+            <button class="button-primary" type="button" data-open-widget>Открыть виджет</button>
+          </div>
+        </section>
+
+        <section id="snippet" class="snippet" aria-labelledby="snippet-title">
+          <div class="section-head">
+            <span class="eyebrow"><i></i> КАК ВСТРОИТЬ</span>
+            <h2 id="snippet-title">Два скрипта и контейнер</h2>
+          </div>
+          <pre><code>&lt;div id="triangle-game" style="max-width:640px"&gt;&lt;/div&gt;
+&lt;script defer src="/assets/triangle-toss.min.js"&gt;&lt;/script&gt;
+&lt;script defer src="/assets/init-triangle.js"&gt;&lt;/script&gt;</code></pre>
+          <pre><code>const game = TriangleToss.create("#triangle-game", {
+  successRate: 0.35,
+  confetti: true,
+  counter: { initial: 0, visible: true, milestones: [5, 10, 25] },
+  style: { color: "#79d6a4", strokeColor: "#294c38", background: "#f6f8f3" },
+});</code></pre>
+          <p class="snippet-note">
+            Параметры: <code>successRate</code>, <code>labels</code> (три подписи),
+            <code>style</code> (цвет, обводка, фон), <code>counter</code>, <code>confetti</code>.
+            Виджет не делает сетевых запросов и не загружает шрифтов.
+          </p>
+        </section>
+
+        <section class="faq" aria-label="О проекте">
+          <h2>Зачем это показывать клиентам</h2>
+          <ul>
+            <li>Покажи виджет вживую — не слайдом, а настоящим интерактивным примером.</li>
+            <li>Настрой вероятность и цвета под себя — и скажи: «вот так он работает на вашей странице».</li>
+            <li>Вся информация на этой странице вымышленная и служит только демонстрации.</li>
+          </ul>
+        </section>
+      </main>
+
+      <footer>
+        <span>△ <span data-brand>Пример-бизнес</span> · демо · данные не собираются</span>
+        <span>Три стороны. Один баланс.</span>
+      </footer>
+    </div>
+    <dialog id="widget-modal" class="widget-modal" aria-labelledby="widget-modal-title">
+      <button id="close-widget-modal" class="widget-modal-close" type="button" aria-label="Закрыть окно">×</button>
+      <span class="eyebrow"><i></i> ЖИВОЙ ПРИМЕР</span>
+      <h2 id="widget-modal-title">Виджет на странице</h2>
+      <div id="widget"></div>
+      <p class="widget-caption">
+        Виджет работает изолированно от остальной страницы и наоборот.
+      </p>
+    </dialog>
+    <script type="module" src="/src/showcase.ts"></script>
+  </body>
+</html>

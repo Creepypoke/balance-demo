@@ -34,6 +34,7 @@ pnpm run build:obfuscated # необязательная обфускация
 | `dist/triangle-toss.es.js`             | Минифицированный ES-модуль с экспортом `create`         |
 | `dist/triangle-toss.obfuscated.min.js` | IIFE после необязательной обфускации                    |
 | `demo-dist/`                           | Демосайт, только после `build:demo`                     |
+| `showcase.html`                      | Страница «как выглядит виджет на вашем сайте» (выдуманный бренд), только после `build:demo` |
 
 Размер обычного IIFE — примерно **19,3 KiB без сжатия / 8,1 KiB gzip**. Точный размер после сборки выводит `scripts/size.mjs`. Для доставки настройте gzip или Brotli на сервере. CSS и GLSL включены в JS; дополнительные ассеты не нужны.
 
